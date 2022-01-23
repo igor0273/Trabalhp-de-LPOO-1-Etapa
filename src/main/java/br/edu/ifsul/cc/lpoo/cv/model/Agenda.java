@@ -8,9 +8,14 @@ package br.edu.ifsul.cc.lpoo.cv.model;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,6 +44,18 @@ public class Agenda {
     
     @Column
     private String observacao;
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TipoProduto tipoProduto;
+    
+    @OneToOne
+    @JoinColumn(name = "medico_id")
+    private Medico medico;
+    
+    @OneToMany
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
 
     /**
      * @return the id
@@ -95,6 +112,50 @@ public class Agenda {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    /**
+     * @return the tipoProduto
+     */
+    public TipoProduto getTipoProduto() {
+        return tipoProduto;
+    }
+
+    /**
+     * @param tipoProduto the tipoProduto to set
+     */
+    public void setTipoProduto(TipoProduto tipoProduto) {
+        this.tipoProduto = tipoProduto;
+    }
+
+    /**
+     * @return the medico
+     */
+    public Medico getMedico() {
+        return medico;
+    }
+
+    /**
+     * @param medico the medico to set
+     */
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    /**
+     * @return the funcionario
+     */
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    /**
+     * @param funcionario the funcionario to set
+     */
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+    
+    
     
     
 }

@@ -13,7 +13,7 @@ public interface InterfacePersistencia {
 
     public Boolean conexaoAberta();
 
-    public Boolean fecharConexao();
+    public void fecharConexao();
 
     public Object find(Class c, Object id) throws Exception;
 

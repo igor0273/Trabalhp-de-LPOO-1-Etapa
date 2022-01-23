@@ -17,7 +17,7 @@ public class PersistenciaJDBC implements InterfacePersistencia{
     }
 
     @Override
-    public Boolean fecharConexao() {
+    public void fecharConexao() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
