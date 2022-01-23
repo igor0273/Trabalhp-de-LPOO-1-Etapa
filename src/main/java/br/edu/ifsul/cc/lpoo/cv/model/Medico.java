@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,6 +30,10 @@ public class Medico {
     
     @Column
     private String numero_crmv;
+    
+    @OneToMany
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
     
     public Medico(){
         
@@ -59,6 +65,20 @@ public class Medico {
      */
     public void setNumero_crmv(String numero_crmv) {
         this.numero_crmv = numero_crmv;
+    }
+
+    /**
+     * @return the pessoa
+     */
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    /**
+     * @param pessoa the pessoa to set
+     */
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
     
     

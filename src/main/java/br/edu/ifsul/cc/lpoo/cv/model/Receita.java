@@ -5,11 +5,14 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,6 +31,10 @@ public class Receita {
     
     @Column
     private String orientacao;
+    
+    @OneToMany
+    @JoinColumn(name = "produto_id")
+    private List<Produto> produto;
     
     public Receita(){
         
@@ -60,6 +67,21 @@ public class Receita {
     public void setOrientacao(String orientacao) {
         this.orientacao = orientacao;
     }
+
+    /**
+     * @return the produto
+     */
+    public List<Produto> getProduto() {
+        return produto;
+    }
+
+    /**
+     * @param produto the produto to set
+     */
+    public void setProduto(List<Produto> produto) {
+        this.produto = produto;
+    }
+    
     
     
 }

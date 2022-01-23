@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,6 +41,14 @@ public class Pet {
     
     @Column
     private String observacao;
+    
+    @OneToOne
+    @JoinColumn(name = "raca_id")
+    private Raca reca;
+    
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
     
     public Pet(){
         
@@ -98,6 +109,35 @@ public class Pet {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    /**
+     * @return the reca
+     */
+    public Raca getReca() {
+        return reca;
+    }
+
+    /**
+     * @param reca the reca to set
+     */
+    public void setReca(Raca reca) {
+        this.reca = reca;
+    }
+
+    /**
+     * @return the cliente
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
     
     
 }

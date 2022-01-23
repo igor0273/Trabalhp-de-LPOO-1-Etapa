@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,6 +30,10 @@ public class Raca {
     
     @Column
     private String nome;
+    
+    @OneToOne
+    @JoinColumn(name = "especie_id")
+    private Especie especie;
 
     /**
      * @return the id
@@ -56,6 +62,21 @@ public class Raca {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    /**
+     * @return the especie
+     */
+    public Especie getEspecie() {
+        return especie;
+    }
+
+    /**
+     * @param especie the especie to set
+     */
+    public void setEspecie(Especie especie) {
+        this.especie = especie;
+    }
+    
     
     
 }

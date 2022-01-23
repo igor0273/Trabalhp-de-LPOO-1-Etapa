@@ -7,9 +7,13 @@ package br.edu.ifsul.cc.lpoo.cv.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,6 +38,14 @@ public class Produto {
     
     @Column
     private Float quantidade;
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TipoProduto tipoProduto;
+    
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
+    private Fornecedor fornecedor;
     
     public Produto(){
         
@@ -94,6 +106,35 @@ public class Produto {
     public void setQuantidade(Float quantidade) {
         this.quantidade = quantidade;
     }
+
+    /**
+     * @return the tipoProduto
+     */
+    public TipoProduto getTipoProduto() {
+        return tipoProduto;
+    }
+
+    /**
+     * @param tipoProduto the tipoProduto to set
+     */
+    public void setTipoProduto(TipoProduto tipoProduto) {
+        this.tipoProduto = tipoProduto;
+    }
+
+    /**
+     * @return the fornecedor
+     */
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    /**
+     * @param fornecedor the fornecedor to set
+     */
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+    
     
     
 }

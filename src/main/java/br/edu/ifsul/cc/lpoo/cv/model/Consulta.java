@@ -6,11 +6,15 @@
 package br.edu.ifsul.cc.lpoo.cv.model;
 
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,6 +46,19 @@ public class Consulta {
     
     @Column
     private Float valor;
+    
+    @OneToOne
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
+    
+    
+    @OneToMany
+    @JoinColumn(name = "receita_id")
+    private List<Receita> receita;
+    
+    @OneToOne
+    @JoinColumn(name = "medico_id")
+    private Medico medico;
     
     public Consulta(){
         
@@ -116,6 +133,50 @@ public class Consulta {
     public void setValor(Float valor) {
         this.valor = valor;
     }
+
+    /**
+     * @return the pet
+     */
+    public Pet getPet() {
+        return pet;
+    }
+
+    /**
+     * @param pet the pet to set
+     */
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    /**
+     * @return the receita
+     */
+    public List<Receita> getReceita() {
+        return receita;
+    }
+
+    /**
+     * @param receita the receita to set
+     */
+    public void setReceita(List<Receita> receita) {
+        this.receita = receita;
+    }
+
+    /**
+     * @return the medico
+     */
+    public Medico getMedico() {
+        return medico;
+    }
+
+    /**
+     * @param medico the medico to set
+     */
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+    
+    
     
     
 }

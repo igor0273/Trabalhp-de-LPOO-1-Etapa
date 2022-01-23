@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,6 +40,14 @@ public class Cliente {
     @OneToMany
     @JoinColumn(name = "pet_id")
     private List<Pet> pet;
+    
+    @OneToOne
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
+    
+    @OneToMany
+    @JoinColumn(name = "venda_id")
+    private List<Venda> venda;
     
     public Cliente(){
         
