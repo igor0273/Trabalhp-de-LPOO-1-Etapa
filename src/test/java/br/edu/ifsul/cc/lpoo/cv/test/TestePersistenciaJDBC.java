@@ -8,6 +8,7 @@ package br.edu.ifsul.cc.lpoo.cv.test;
 import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJDBC;
+import org.junit.Test;
 
 /**
  *
@@ -15,6 +16,7 @@ import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJDBC;
  */
 public class TestePersistenciaJDBC {
     
+    @Test
     public void testConexao()throws Exception{
         PersistenciaJDBC persistenciaJDBC = new PersistenciaJDBC();
         if(persistenciaJDBC.conexaoAberta()){

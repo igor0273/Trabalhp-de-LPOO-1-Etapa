@@ -6,6 +6,7 @@
 package br.edu.ifsul.cc.lpoo.cv.test;
 
 import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJPA;
+import org.junit.Test;
 
 /**
  *
@@ -16,15 +17,18 @@ public class TestPersistenciaJPA {
     /**
      * Teste Reponsavel pela criação da tabelas do banco de dados
      */
+     @Test
     public void testConexaoGeracaoTabelas(){
         
-        PersistenciaJPA persistenciaJPA = new PersistenciaJPA();
-        
-        if(persistenciaJPA.conexaoAberta()){
-            System.out.println("Abriu conexao com o BD via JPA");
-            persistenciaJPA.fecharConexao();
+        PersistenciaJPA persistencia = new PersistenciaJPA();
+        if(persistencia.conexaoAberta()){
+            System.out.println("abriu a conexao com o BD via JPA");
+            
+            persistencia.fecharConexao();
+            
         }else{
-            System.out.println("Nso abriu a conexao com o bd via JPA");
+            System.out.println("Nao abriu a conexao com o BD via JPA");
         }
+        
     }
 }

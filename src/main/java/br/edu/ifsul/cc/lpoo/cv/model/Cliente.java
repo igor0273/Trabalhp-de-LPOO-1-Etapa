@@ -39,7 +39,7 @@ public class Cliente {
     
     @OneToMany
     @JoinColumn(name = "pet_id")
-    private List<Pet> pet;
+    private Pet pet;
     
     @OneToOne
     @JoinColumn(name = "pessoa_id")
@@ -84,14 +84,14 @@ public class Cliente {
     /**
      * @return the pet
      */
-    public List<Pet> getPet() {
+    public Pet getPet() {
         return pet;
     }
 
     /**
      * @param pet the pet to set
      */
-    public void setPet(List<Pet> pet) {
+    public void setPet(Pet pet) {
         this.pet = pet;
     }
     

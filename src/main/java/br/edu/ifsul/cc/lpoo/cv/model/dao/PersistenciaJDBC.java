@@ -60,7 +60,7 @@ public class PersistenciaJDBC implements InterfacePersistencia{
     public Object find(Class c, Object id) throws Exception {
         if(c == Cliente.class){
             //tb_cliente
-            PreparedStatement ps = this.con.prepareStatement("select * from tb_cliente where id = ?");
+            PreparedStatement ps = this.con.prepareStatement("select id,data_ultima_visita,pessoa from tb_cliente where id = ?");
             ps.setInt(1, Integer.parseInt(id.toString()));
             
             ResultSet rs = ps.executeQuery();
@@ -77,7 +77,7 @@ public class PersistenciaJDBC implements InterfacePersistencia{
                 
             }
         }else if(c == Pessoa.class){
-            PreparedStatement ps = this.con.prepareStatement("select * from tb_cliente where id = ?");
+            PreparedStatement ps = this.con.prepareStatement("select id,cpf,rg,nome,senha,numero_celular,email,data_cadastro,data_nascimento,cep,endereco,complemento from tb_pessoa where id = ?");
             ps.setInt(1, Integer.parseInt(id.toString()));
             
             ResultSet rs = ps.executeQuery();
@@ -104,7 +104,7 @@ public class PersistenciaJDBC implements InterfacePersistencia{
             
             if(p.getId() == null){
                 
-                PreparedStatement ps = this.con.prepareStatement("insert into tb_pessoa (id,*) values (nextval('seq_pessoa_id'),*) returning id");
+                PreparedStatement ps = this.con.prepareStatement("insert into tb_pessoa (id,cpf,rg,nome,senha,numero_celular,email,data_cadastro,data_nascimento,cep,endereco,complemento) values (nextval('seq_pessoa_id'),?,?,?,?,?,?,?,?,?,?,?) returning id");
                 
                 //Elementos para inserir na tb_pessoa
                 
@@ -115,8 +115,17 @@ public class PersistenciaJDBC implements InterfacePersistencia{
                 }
             }else{
                  PreparedStatement ps = this.con.prepareStatement("update tb_pessoa set "
-                                                                                + "cep = ?, "
-                                                                                + "complemento = ? "
+                                                                                + "cpf = ?, "
+                                                                                + "rg = ? ,"
+                                                                                + "nome = ? ,"
+                                                                                + "senha = ? ,"
+                                                                                + "numero_celular = ? ,"
+                                                                                + "email = ? ,"
+                                                                                + "data_cadastro = ? ,"
+                                                                                + "data_nascimento = ? ,"
+                                                                                + "cep = ? ,"
+                                                                                + "endereco = ? ,"
+                                                                                + "complemento = ?"
                                                                                 + "where id = ?");
                //Elementos de Tb_pessoa
                 
@@ -126,7 +135,7 @@ public class PersistenciaJDBC implements InterfacePersistencia{
             Cliente c = (Cliente) o;
             
             if(c.getId() == null){
-                 PreparedStatement ps = this.con.prepareStatement("insert into tb_cliente (id,*) values (nextval('seq_pessoa_id'),*) returning id");
+                 PreparedStatement ps = this.con.prepareStatement("insert into tb_cliente (id,data_ultima_visita,pessoa) values (nextval('seq_cliente_id'),?,?) returning id");
                 
                 //Elementos para inserir na tb_pessoa
                 
@@ -137,8 +146,9 @@ public class PersistenciaJDBC implements InterfacePersistencia{
                 }
             }else{
                   PreparedStatement ps = this.con.prepareStatement("update tb_cliente set "
-                                                                                + "cep = ?, "
-                                                                                + "complemento = ? "
+                                                                                + "data_ultima_visita = ?, "
+                                                                                + "pessoa = ? ,"
+                                                                                + "pet = ?"
                                                                                 + "where id = ?");
                //Elementos de Tb_pessoa
                 
