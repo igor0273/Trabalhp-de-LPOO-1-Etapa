@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -53,7 +54,7 @@ public class Agenda {
     @JoinColumn(name = "medico_id")
     private Medico medico;
     
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
 

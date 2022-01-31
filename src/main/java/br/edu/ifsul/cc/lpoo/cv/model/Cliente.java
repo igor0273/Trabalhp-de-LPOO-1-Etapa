@@ -9,10 +9,13 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -37,17 +40,17 @@ public class Cliente {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_ultima_visita;
     
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id")
-    private Pessoa pessoa;
+    private Integer pessoa;
     
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "venda_id")
-    private List<Venda> venda;
+    private Venda venda;
     
     public Cliente(){
         
@@ -93,6 +96,34 @@ public class Cliente {
      */
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    /**
+     * @return the pessoa
+     */
+    public Integer getPessoa() {
+        return pessoa;
+    }
+
+    /**
+     * @param pessoa the pessoa to set
+     */
+    public void setPessoa(Integer pessoa) {
+        this.pessoa = pessoa;
+    }
+
+    /**
+     * @return the venda
+     */
+    public Venda getVenda() {
+        return venda;
+    }
+
+    /**
+     * @param venda the venda to set
+     */
+    public void setVenda(Venda venda) {
+        this.venda = venda;
     }
     
     
