@@ -9,6 +9,7 @@ import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJDBC;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Test;
 
@@ -88,6 +89,7 @@ public class TestePersistenciaJDBC {
 
                 c = new Cliente();
                 c.setPessoa(1);
+                
 
                 persistenciaJDBC.persist(c);
                 System.out.println("Inseriu o Cliente: " + c.getId());
