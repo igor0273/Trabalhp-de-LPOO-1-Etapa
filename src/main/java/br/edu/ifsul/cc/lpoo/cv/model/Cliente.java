@@ -6,6 +6,7 @@
 package br.edu.ifsul.cc.lpoo.cv.model;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class Cliente {
     
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar data_ultima_visita;
+    private Date data_ultima_visita;
     
     @ManyToOne
     @JoinColumn(name = "pet_id")
@@ -73,14 +74,14 @@ public class Cliente {
     /**
      * @return the data_ultima_visita
      */
-    public Calendar getData_ultima_visita() {
+    public Date getData_ultima_visita() {
         return data_ultima_visita;
     }
 
     /**
      * @param data_ultima_visita the data_ultima_visita to set
      */
-    public void setData_ultima_visita(Calendar data_ultima_visita) {
+    public void setData_ultima_visita(Date data_ultima_visita) {
         this.data_ultima_visita = data_ultima_visita;
     }
 
