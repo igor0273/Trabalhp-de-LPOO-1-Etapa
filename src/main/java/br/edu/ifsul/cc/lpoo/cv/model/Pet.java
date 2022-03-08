@@ -8,6 +8,7 @@ package br.edu.ifsul.cc.lpoo.cv.model;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,22 +33,22 @@ public class Pet {
     @GeneratedValue(generator = "seq_pet", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column
+    @Column(nullable = false, length = 80)
     private String nome;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_nascimento;
     
-    @Column
+    @Column(nullable = false, length = 50)
     private String observacao;
     
-    @OneToOne
-    @JoinColumn(name = "raca_id")
-    private Raca reca;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "raca_id", nullable = false)
+    private Raca raca;
     
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
     
     public Pet(){
@@ -114,14 +115,14 @@ public class Pet {
      * @return the reca
      */
     public Raca getReca() {
-        return reca;
+        return raca;
     }
 
     /**
-     * @param reca the reca to set
+     * @param raca the raca to set
      */
-    public void setReca(Raca reca) {
-        this.reca = reca;
+    public void setReca(Raca raca) {
+        this.raca = raca;
     }
 
     /**

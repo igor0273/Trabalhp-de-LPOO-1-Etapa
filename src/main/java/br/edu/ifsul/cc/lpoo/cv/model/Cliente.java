@@ -5,17 +5,18 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,24 +31,15 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tb_cliente")
-public class Cliente {
+@DiscriminatorValue("C")
+public class Cliente extends Pessoa{
     
-    @Id
-     @SequenceGenerator(name = "seq_cliente", sequenceName = "seq_cliente_id", allocationSize = 1)
-    @GeneratedValue(generator = "seq_cliente", strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date data_ultima_visita;
+    private Calendar data_ultima_visita;
     
-    @ManyToOne
-    @JoinColumn(name = "pet_id")
-    private Pet pet;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pessoa_id")
-    private Integer pessoa;
+    @OneToMany(mappedBy = "cliente")
+    private List<Pet> pets;///LISTA COM AGREGAÇÃO POR COMPOSIÇÃO
     
     @ManyToOne
     @JoinColumn(name = "venda_id")
@@ -57,77 +49,31 @@ public class Cliente {
         
     }
 
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the data_ultima_visita
-     */
-    public Date getData_ultima_visita() {
+    public Calendar getData_ultima_visita() {
         return data_ultima_visita;
     }
 
-    /**
-     * @param data_ultima_visita the data_ultima_visita to set
-     */
-    public void setData_ultima_visita(Date data_ultima_visita) {
+    public void setData_ultima_visita(Calendar data_ultima_visita) {
         this.data_ultima_visita = data_ultima_visita;
     }
 
-    /**
-     * @return the pet
-     */
-    public Pet getPet() {
-        return pet;
+    public List<Pet> getPets() {
+        return pets;
     }
 
-    /**
-     * @param pet the pet to set
-     */
-    public void setPet(Pet pet) {
-        this.pet = pet;
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 
-    /**
-     * @return the pessoa
-     */
-    public Integer getPessoa() {
-        return pessoa;
-    }
-
-    /**
-     * @param pessoa the pessoa to set
-     */
-    public void setPessoa(Integer pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    /**
-     * @return the venda
-     */
     public Venda getVenda() {
         return venda;
     }
 
-    /**
-     * @param venda the venda to set
-     */
     public void setVenda(Venda venda) {
         this.venda = venda;
     }
-    
-    
+
+  
     
     
 }

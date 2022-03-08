@@ -34,7 +34,7 @@ public class TestePersistenciaJDBC {
         Cliente c = new Cliente();
         PersistenciaJDBC persistenciaJDBC = new PersistenciaJDBC();
         
-        c.setId(1);
+        c.setCpf("123456789");
         persistenciaJDBC.remover(c);
     }
     
@@ -42,7 +42,7 @@ public class TestePersistenciaJDBC {
         Pessoa p = new Pessoa();
         PersistenciaJDBC persistenciaJDBC = new PersistenciaJDBC();
         
-        p.setId(1);
+        p.setCpf("123456789");
         persistenciaJDBC.remover(p);
     }
     
@@ -68,10 +68,10 @@ public class TestePersistenciaJDBC {
                 
                 persistenciaJDBC.persist(p);
             }else{
-                System.out.println("Encontrou a pessoa:"+ p.getId());
+                System.out.println("Encontrou a pessoa:"+ p.getCpf());
                 p.setSenha("456789");
                 persistenciaJDBC.persist(p);
-                System.out.println("Alterou a senha da pessoa: "+p.getId());
+                System.out.println("Alterou a senha da pessoa: "+p.getCpf());
             }
             persistenciaJDBC.fecharConexao();
         }
@@ -88,17 +88,15 @@ public class TestePersistenciaJDBC {
                  System.out.println("Nao encontrou a compra");
 
                 c = new Cliente();
-                c.setPessoa(1);
                 
 
                 persistenciaJDBC.persist(c);
-                System.out.println("Inseriu o Cliente: " + c.getId());
+                System.out.println("Inseriu o Cliente: " + c.getNome());
                 
             }else{
                 System.out.println("Encontrou clienete");
-                c.setPessoa(2);
                 persistenciaJDBC.persist(c);
-                System.out.println("Alterou o cliente: "+ c.getId());
+                System.out.println("Alterou o cliente: "+ c.getNome());
             }
         }
         persistenciaJDBC.fecharConexao();
@@ -113,7 +111,6 @@ public class TestePersistenciaJDBC {
             System.out.println("nao encontrou a pessoa buscada");
         }else{
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.println("Pessoa: "+ p.getId());
             System.out.println("Nome: "+ p.getNome());
             System.out.println("Cpf: "+ p.getCpf());
             System.out.println("RG: "+ p.getRg());
@@ -136,27 +133,22 @@ public class TestePersistenciaJDBC {
         if(c == null){
             System.out.println("Nao encontrou o cliente");
         }else{
-            Pessoa p = new Pessoa();
-            if(c.getPessoa() != null){
-                p = (Pessoa) persistenciaJDBC.find(Pessoa.class, new Integer(c.getPessoa()));
-            }
             
-            System.out.println("Cliente: "+c.getId());
+            
+            System.out.println("Cliente: "+c.getNome());
             System.out.println("Pessoa { ");
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.println("Pessoa: "+ p.getId());
-            System.out.println("Nome: "+ p.getNome());
-            System.out.println("Cpf: "+ p.getCpf());
-            System.out.println("RG: "+ p.getRg());
-            System.out.println("Cep: "+ p.getCep());
-            System.out.println("Enderco: "+ p.getEndereco());
-            System.out.println("Senha: "+ p.getSenha());
-            System.out.println("Data cadastro: "+ sdf.format(p.getData_cadastro()));
-            System.out.println("Data nascimento: "+ sdf.format(p.getData_nascimento()));
-            System.out.println("Numero telefone: "+ p.getNumero_celular());
-            System.out.println("Email: "+ p.getEmail());
+            System.out.println("Cpf: "+ c.getCpf());
+            System.out.println("RG: "+ c.getRg());
+            System.out.println("Cep: "+ c.getCep());
+            System.out.println("Enderco: "+ c.getEndereco());
+            System.out.println("Senha: "+ c.getSenha());
+            System.out.println("Data cadastro: "+ sdf.format(c.getData_cadastro()));
+            System.out.println("Data nascimento: "+ sdf.format(c.getData_nascimento()));
+            System.out.println("Numero telefone: "+ c.getNumero_celular());
+            System.out.println(c.getEmail()+ "Email: ");
             System.out.println("}");
-            System.out.println("Data Compra: "+sdf.format(c.getData_ultima_visita()));
+         
         }
     }
 

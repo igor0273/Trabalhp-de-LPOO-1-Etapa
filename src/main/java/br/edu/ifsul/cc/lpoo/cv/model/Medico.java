@@ -5,16 +5,13 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.util.Calendar;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -22,37 +19,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_medico")
-public class Medico {
-    
-    @Id
-     @SequenceGenerator(name = "seq_medico", sequenceName = "seq_medico_id", allocationSize = 1)
-    @GeneratedValue(generator = "seq_medico", strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    
-    @Column
+@DiscriminatorValue("M")
+public class Medico extends Pessoa{
+        
+    @Column(nullable = false, length = 10)
     private String numero_crmv;
     
-    @ManyToOne
-    @JoinColumn(name = "pessoa_id")
-    private Pessoa pessoa;
+   
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar data_cadastro_Medico;
     
     public Medico(){
         
     }
 
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  
 
     /**
      * @return the numero_crmv
@@ -69,17 +51,17 @@ public class Medico {
     }
 
     /**
-     * @return the pessoa
+     * @return the data_cadastro_Medico
      */
-    public Pessoa getPessoa() {
-        return pessoa;
+    public Calendar getData_cadastro_Medico() {
+        return data_cadastro_Medico;
     }
 
     /**
-     * @param pessoa the pessoa to set
+     * @param data_cadastro_Medico the data_cadastro_Medico to set
      */
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setData_cadastro_Medico(Calendar data_cadastro_Medico) {
+        this.data_cadastro_Medico = data_cadastro_Medico;
     }
     
     

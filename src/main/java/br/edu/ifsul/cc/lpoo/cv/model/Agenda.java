@@ -5,6 +5,7 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -28,34 +28,34 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name ="tb_agenda")
-public class Agenda {
+public class Agenda implements Serializable {
     
     @Id
-     @SequenceGenerator(name = "seq_agenda", sequenceName = "seq_agenda_id", allocationSize = 1)
+    @SequenceGenerator(name = "seq_agenda", sequenceName = "seq_agenda_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_agenda", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_inicio;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_fim;
     
-    @Column
+    @Column(nullable = false, length = 100)
     private String observacao;
     
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoProduto tipoProduto;
     
     @OneToOne
-    @JoinColumn(name = "medico_id")
+    @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
     
     @ManyToOne
-    @JoinColumn(name = "funcionario_id")
+    @JoinColumn(name = "funcionario_id", nullable = false)
     private Funcionario funcionario;
 
     /**

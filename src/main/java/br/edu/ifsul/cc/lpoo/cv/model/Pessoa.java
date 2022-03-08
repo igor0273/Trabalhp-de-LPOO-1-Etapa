@@ -1,12 +1,13 @@
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,63 +18,46 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tb_pessoa")
-public class Pessoa {
+@Inheritance(strategy = InheritanceType.JOINED)//alterar a estrategia para JOINED
+@DiscriminatorColumn(name = "tipo")
+public class Pessoa implements Serializable  {
     
-    @Id
-    @SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa_id", allocationSize = 1)
-    @GeneratedValue(generator = "seq_pessoa", strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    
-    @Column(length = 11)
+   @Id
     private String cpf;
     
-    @Column(length = 10)
+    @Column(nullable = false, length = 10)
     private String rg;
     
-    @Column
+    @Column(nullable = false, length = 80)
     private String nome;
     
-    @Column
+    @Column(nullable = false, length = 10)
     private String senha;
     
-    @Column
+    @Column(nullable = false, length = 14)
     private String numero_celular;
     
-    @Column
+    @Column(nullable = false, length = 80)
     private String email;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_cadastro;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_nascimento;
     
-    @Column
+    @Column(nullable = false, length = 8)
     private String cep;
     
-    @Column
+    @Column(nullable = false, length = 50)
     private String endereco;
     
-    @Column
+    @Column(nullable = false, length = 80)
     private String complemento;
     
     public Pessoa(){
-    }
-
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**
@@ -229,6 +213,7 @@ public class Pessoa {
     public void setComplemento(String complemento) {
         this.complemento = complemento;
     }
+
     
     
     

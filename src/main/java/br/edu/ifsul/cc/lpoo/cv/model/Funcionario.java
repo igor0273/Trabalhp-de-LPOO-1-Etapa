@@ -6,7 +6,10 @@
 package br.edu.ifsul.cc.lpoo.cv.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,25 +24,26 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_funcionario")
-public class Funcionario {
-    
+@DiscriminatorValue("F")
+public class Funcionario extends Pessoa {
+
     @Id
-     @SequenceGenerator(name = "seq_funcionario", sequenceName = "seq_funcionario_id", allocationSize = 1)
+    @SequenceGenerator(name = "seq_funcionario", sequenceName = "seq_funcionario_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_funcionario", strategy = GenerationType.SEQUENCE)
     private Integer id;
-    
-    @Column
+
+    @Column(nullable = false, length = 20)
     private String numero_ctps;
-    
-    @Column
+
+    @Column(nullable = false, length = 20)
     private String numero_pis;
-    
-    @OneToOne
-    @JoinColumn(name = "pessoa_id")
-    private Pessoa pessoa;
-    
-    public Funcionario(){
-        
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Cargo cargo;
+
+    public Funcionario() {
+
     }
 
     /**
@@ -85,19 +89,19 @@ public class Funcionario {
     }
 
     /**
-     * @return the pessoa
+     * @return the cargo
      */
-    public Pessoa getPessoa() {
-        return pessoa;
+    public Cargo getCargo() {
+        return cargo;
     }
 
     /**
-     * @param pessoa the pessoa to set
+     * @param cargo the cargo to set
      */
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
     
     
-    
+
 }

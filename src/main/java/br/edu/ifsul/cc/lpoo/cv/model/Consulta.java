@@ -5,16 +5,18 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,38 +28,37 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tb_consulta")
-public class Consulta {
+public class Consulta implements Serializable {
  
     @Id
      @SequenceGenerator(name = "seq_consulta", sequenceName = "seq_consulta_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_consulta", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_consulta;
     
-    @Column
+    @Column(nullable = false, length = 100)
     private String observacao;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_retorno;
     
-    @Column
+    @Column(nullable = false, precision = 2)
     private Float valor;
     
-    @OneToOne
-    @JoinColumn(name = "pet_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
     
     
-    @OneToMany
-    @JoinColumn(name = "receita_id")
+    @OneToMany(mappedBy = "consulta")///Agregação por composição
     private List<Receita> receita;
     
-    @OneToOne
-    @JoinColumn(name = "medico_id")
+    @ManyToOne///associação
+    @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
     
     public Consulta(){

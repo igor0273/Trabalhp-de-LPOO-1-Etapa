@@ -5,6 +5,7 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
@@ -15,6 +16,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -28,31 +32,37 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tb_venda")
-public class Venda {
+public class Venda implements Serializable {
     
     @Id
      @SequenceGenerator(name = "seq_venda", sequenceName = "seq_venda_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_venda", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column
+    @Column(length = 100)
     private String observacao;
     
-    @Column
+    @Column(precision = 2)
     private Float valor_total;
     
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar data;
+    private Calendar data_venda;
     
-    @OneToOne
-    @JoinColumn(name = "consulta_id")
-    private Consulta consulta;
+     @ManyToOne///associaçao
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;
     
-    @OneToMany
-    @JoinColumn(name = "produto_id")
-    private List<Produto> produto;
-    
+     @ManyToMany
+    @JoinTable(name = "tb_venda_produtos", joinColumns = {@JoinColumn(name = "venda_id")}, //agregacao, vai gerar uma tabela associativa.
+            inverseJoinColumns = {@JoinColumn(name = "produto_id")})
+    private List<Produto> produtos;
+
+    @ManyToMany
+    @JoinTable(name = "tb_venda_consultas", joinColumns = {@JoinColumn(name = "venda_id")}, //agregacao, vai gerar uma tabela associativa.
+            inverseJoinColumns = {@JoinColumn(name = "consulta_id")})
+    private List<Consulta> consultas;
+   
     @Column
     @Enumerated(EnumType.STRING)
     private Pagamento pagamento;
@@ -60,103 +70,71 @@ public class Venda {
         
     }
 
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the observacao
-     */
     public String getObservacao() {
         return observacao;
     }
 
-    /**
-     * @param observacao the observacao to set
-     */
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
 
-    /**
-     * @return the valor_total
-     */
     public Float getValor_total() {
         return valor_total;
     }
 
-    /**
-     * @param valor_total the valor_total to set
-     */
     public void setValor_total(Float valor_total) {
         this.valor_total = valor_total;
     }
 
-    /**
-     * @return the data
-     */
-    public Calendar getData() {
-        return data;
+    public Calendar getData_venda() {
+        return data_venda;
     }
 
-    /**
-     * @param data the data to set
-     */
-    public void setData(Calendar data) {
-        this.data = data;
+    public void setData_venda(Calendar data_venda) {
+        this.data_venda = data_venda;
     }
 
-    /**
-     * @return the consulta
-     */
-    public Consulta getConsulta() {
-        return consulta;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    /**
-     * @param consulta the consulta to set
-     */
-    public void setConsulta(Consulta consulta) {
-        this.consulta = consulta;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
-    /**
-     * @return the produto
-     */
-    public List<Produto> getProduto() {
-        return produto;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    /**
-     * @param produto the produto to set
-     */
-    public void setProduto(List<Produto> produto) {
-        this.produto = produto;
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
-    /**
-     * @return the pagamento
-     */
+    public List<Consulta> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(List<Consulta> consultas) {
+        this.consultas = consultas;
+    }
+
     public Pagamento getPagamento() {
         return pagamento;
     }
 
-    /**
-     * @param pagamento the pagamento to set
-     */
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
     }
+
+   
     
     
     

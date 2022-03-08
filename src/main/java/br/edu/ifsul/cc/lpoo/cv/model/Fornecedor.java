@@ -5,7 +5,9 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,23 +23,21 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_fornecedor")
-public class Fornecedor {
+@DiscriminatorValue("O")
+public class Fornecedor extends Pessoa{
     
     @Id
      @SequenceGenerator(name = "seq_fornecedor", sequenceName = "seq_fornecedor_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_fornecedor", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column
+    @Column(nullable = false, length = 20)
     private String cnpj;
     
-    @Column
+    @Column(nullable = false, length = 20)
     private String ie;
     
-    @OneToOne
-    @JoinColumn(name = "pessoa_id")
-    private Pessoa pessoa;
-    
+  
     public Fornecedor(){
         
     }
@@ -83,21 +83,6 @@ public class Fornecedor {
     public void setIe(String ie) {
         this.ie = ie;
     }
-
-    /**
-     * @return the pessoa
-     */
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    /**
-     * @param pessoa the pessoa to set
-     */
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-    
-    
+   
     
 }

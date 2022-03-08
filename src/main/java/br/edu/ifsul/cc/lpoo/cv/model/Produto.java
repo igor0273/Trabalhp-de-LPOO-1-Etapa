@@ -5,6 +5,7 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,20 +24,20 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name ="tb_produto")
-public class Produto {
+public class Produto implements Serializable {
     
     @Id
      @SequenceGenerator(name = "seq_produto", sequenceName = "seq_produto_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_produto", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column
+    @Column(nullable = false, length = 80)
     private String nome;
     
-    @Column(precision = 2)
+    @Column(nullable = false ,precision = 2)
     private Float valor;
     
-    @Column
+    @Column(nullable = false, precision = 2)
     private Float quantidade;
     
     @Column
@@ -44,7 +45,7 @@ public class Produto {
     private TipoProduto tipoProduto;
     
     @ManyToOne
-    @JoinColumn(name = "fornecedor_id")
+    @JoinColumn(name = "fornecedor_id", nullable = false)
     private Fornecedor fornecedor;
     
     public Produto(){
