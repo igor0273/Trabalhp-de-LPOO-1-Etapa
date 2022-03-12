@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class Receita implements Serializable {
     @GeneratedValue(generator = "seq_receita", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column(nullable = false, length = 150)
+    @Column(length = 150)
     private String orientacao;
     
    @ManyToMany
@@ -41,8 +42,8 @@ public class Receita implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "produto_id")})
     private List<Produto> produto;
     
-   @ManyToOne
-   @JoinColumn(name = "consulta_id", nullable = false)
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "consulta_id")
    private Consulta consulta;
    
     public Receita(){

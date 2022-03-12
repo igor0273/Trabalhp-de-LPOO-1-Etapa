@@ -8,6 +8,7 @@ package br.edu.ifsul.cc.lpoo.cv.model.dao;
 import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Consulta;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
+import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import java.util.List;
 
@@ -35,5 +36,5 @@ public interface InterfacePersistencia {
     
     public List<Funcionario> getFuncionarios() throws Exception;
     
-    public List<Cliente> getListCliente() throws Exception;
+    public List<Pessoa> getListPessoa() throws Exception;
 }

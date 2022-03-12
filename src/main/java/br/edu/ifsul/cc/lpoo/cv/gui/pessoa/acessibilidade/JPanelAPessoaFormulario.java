@@ -15,8 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -48,6 +51,9 @@ public class JPanelAPessoaFormulario extends JPanel implements ActionListener {
 
     private Pessoa pessoa;
     private SimpleDateFormat format;
+    
+    private JLabel lblNome;
+    private JTextField txfNome;
 
     private JPanel pnlSul;
     private JButton btnGravar;
@@ -55,6 +61,12 @@ public class JPanelAPessoaFormulario extends JPanel implements ActionListener {
 
     private JPanel pnlDadosClientes;
     private JPanel pnlDadosFuncionario;
+    
+     private DefaultTableModel modeloTabelaCliente;
+     private JScrollPane scpListagemCliente;
+    private JTable tblListagemCliente;
+     private JButton btnAdicionarCliente;
+     private JLabel lblClienteAdicionar;
 
     public JPanelAPessoaFormulario(JPanelAPessoa pnlApessoa, Controle controle) {
         this.pnlAPessoa = pnlApessoa;
@@ -125,20 +137,32 @@ public class JPanelAPessoaFormulario extends JPanel implements ActionListener {
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
         pnlDadosCadastrais.add(txfCpf, posicionador);
 
-        lblSenha = new JLabel("Senha:");
+        lblNome = new JLabel("Nome:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        pnlDadosCadastrais.add(lblNome, posicionador);
+        
+        txfNome = new JTextField(50);
+         posicionador = new GridBagConstraints();
+        posicionador.gridy = 1;//policao da linha (vertical)
+        posicionador.gridx = 1;// posição da coluna (horizontal)
+        pnlDadosCadastrais.add(txfNome, posicionador);
+        
+        lblSenha = new JLabel("Senha:");
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 2;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
         pnlDadosCadastrais.add(lblSenha, posicionador);//o add adiciona o rotulo no painel  
 
         txfSenha = new JPasswordField(10);
         posicionador = new GridBagConstraints();
-        posicionador.gridy = 1;//policao da linha (vertical)
-        posicionador.gridx = 1;// posição da coluna (horizontal)
+        posicionador.gridy = 2;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
         pnlDadosCadastrais.add(txfSenha, posicionador);
 
-        lblCep = new JLabel("Quantidade de Pontos:");
+        lblCep = new JLabel("Cep:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 2;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
@@ -151,37 +175,84 @@ public class JPanelAPessoaFormulario extends JPanel implements ActionListener {
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
         pnlDadosCadastrais.add(txfCep, posicionador);//o add adiciona o rotulo no painel  
 
-        tbpAbas.addTab("Dados Cadastrais", pnlDadosCadastrais);
-
+        lblEmail = new JLabel("Email:");
+         posicionador = new GridBagConstraints();
+        posicionador.gridy = 3;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        pnlDadosCadastrais.add(lblEmail, posicionador);
+        
+        txfEmail = new JTextField(60);
+         posicionador = new GridBagConstraints();
+        posicionador.gridy = 3;//policao da linha (vertical)
+        posicionador.gridx = 1;// posição da coluna (horizontal)
+        pnlDadosCadastrais.add(txfEmail, posicionador);
+        
+        tbpAbas.addTab("Dados Cadastros", pnlDadosCadastrais);
+        
         pnlDadosClientes = new JPanel();
+        pnlDadosClientes.setLayout(new GridBagLayout());
+        
+        scpListagemCliente = new JScrollPane();
+        tblListagemCliente = new JTable();
+        
+        modeloTabelaCliente = new DefaultTableModel(
+        new String[]{
+            "CPF", "NOME"
+        }, 0);
+        
+        tblListagemCliente.setModel(modeloTabelaCliente);
+        
+        scpListagemCliente.setViewportView(tblListagemCliente);
+        
+        lblClienteAdicionar = new JLabel("Escolha uma Pessoa pra adicionar");
+        btnAdicionarCliente = new JButton("Adicionar");
+        
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 0;
+        posicionador.gridx = 0;
+        pnlDadosClientes.add(scpListagemCliente,posicionador);
+        
+        JPanel pnlLinha = new JPanel();
+        pnlLinha.setLayout(new FlowLayout());
+        pnlLinha.add(lblClienteAdicionar);
+        
+         posicionador = new GridBagConstraints();
+        posicionador.gridy = 1;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        pnlDadosClientes.add(pnlLinha, posicionador);//o add adiciona o rotulo no painel
+        
+        
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 2;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        pnlDadosClientes.add(btnAdicionarCliente, posicionador);//o add adiciona o rotulo no painel
+        
+                
         tbpAbas.addTab("Cliente", pnlDadosClientes);
-
-        pnlDadosFuncionario = new JPanel();
+        
         tbpAbas.addTab("Funcionarios", pnlDadosFuncionario);
-
-        pnlSul = new JPanel();
-        pnlSul.setLayout(new FlowLayout());
-
+        
         btnGravar = new JButton("Gravar");
         btnGravar.addActionListener(this);
         btnGravar.setFocusable(true);    //acessibilidade    
-        btnGravar.setToolTipText("btnGravarJogador"); //acessibilidade
+        btnGravar.setToolTipText("btnGravarPessoa"); //acessibilidade
         btnGravar.setMnemonic(KeyEvent.VK_G);
-        btnGravar.setActionCommand("botao_gravar_formulario_jogador");
-
+        btnGravar.setActionCommand("botao_gravar_formulario_pessoa");
+        
         pnlSul.add(btnGravar);
-
+        
         btnCancelar = new JButton("Cancelar");
         btnCancelar.addActionListener(this);
         btnCancelar.setFocusable(true);    //acessibilidade    
         btnCancelar.setToolTipText("btnCancelarPessoa"); //acessibilidade
         btnCancelar.setActionCommand("botao_cancelar_formulario_pessoa");
-
+        
         pnlSul.add(btnCancelar);
-
+        
         this.add(pnlSul, BorderLayout.SOUTH);
-
+        
         format = new SimpleDateFormat("dd/MM/yyyy");
+        
 
     }
 
@@ -197,12 +268,12 @@ public class JPanelAPessoaFormulario extends JPanel implements ActionListener {
 
                     pnlAPessoa.getControle().getConexaoJDBC().persist(p);
 
-                    JOptionPane.showMessageDialog(this, "Jogador armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Pessoa armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
 
-                    pnlAPessoa.showTela("tela_jogador_listagem");
+                    pnlAPessoa.showTela("tela_pessoa_listagem");
 
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao salvar Jogador! : " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao salvar Pessoa! : " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
 
@@ -213,7 +284,7 @@ public class JPanelAPessoaFormulario extends JPanel implements ActionListener {
 
         } else if (arg0.getActionCommand().equals(btnCancelar.getActionCommand())) {
 
-            pnlAPessoa.showTela("tela_jogador_listagem");
+            pnlAPessoa.showTela("tela_pessoa_listagem");
 
         }
     }

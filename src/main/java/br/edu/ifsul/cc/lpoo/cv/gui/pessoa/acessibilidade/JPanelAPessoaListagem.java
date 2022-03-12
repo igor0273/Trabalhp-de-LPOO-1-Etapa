@@ -66,13 +66,13 @@ public class JPanelAPessoaListagem extends JPanel implements ActionListener {
 
         try {
 
-            List<Cliente> listCliente = controle.getConexaoJDBC().getListCliente();
-            for (Cliente c : listCliente) {
+            List<Pessoa> listCliente = controle.getConexaoJDBC().getListPessoa();
+            for (Pessoa c : listCliente) {
 
-                model.addRow(new Object[]{c, c.getCpf(), c.getSenha(), c.getCep(), c.getEmail()});
+                model.addRow(new Object[]{c, c.getCpf(), format.format(c.getData_cadastro().getTime()), c.getNome(), c.getRg()});
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao listar Jogadores -:" + ex.getLocalizedMessage(), "Jogadores", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao listar Pessoa -:" + ex.getLocalizedMessage(), "Pessoa", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
@@ -108,7 +108,7 @@ public class JPanelAPessoaListagem extends JPanel implements ActionListener {
 
         modeloTabela = new DefaultTableModel(
                 new String[]{
-                    "CPF", "Senha", "CEP", "E-mail"
+                    "CPF", "Data Cadastro", "Nome", "Rg"
                 }, 0);
 
         tblListagem.setModel(modeloTabela);
@@ -169,11 +169,11 @@ public class JPanelAPessoaListagem extends JPanel implements ActionListener {
 
                 Pessoa p = (Pessoa) linha.get(0); //model.addRow(new Object[]{u, u.getNome(), ...
 
-                pnlAPessoa.showTela("tela_jogador_formulario");
+                pnlAPessoa.showTela("tela_pessoa_formulario");
                 pnlAPessoa.getFormulario().setPessoaFormulario(p);
 
             } else {
-
+                 JOptionPane.showMessageDialog(this, "Selecione uma linha para editar!", "Edição", JOptionPane.INFORMATION_MESSAGE);
             }
         } else if (arg0.getActionCommand().equals(btnRemover.getActionCommand())) {
 
@@ -188,11 +188,11 @@ public class JPanelAPessoaListagem extends JPanel implements ActionListener {
 
                 try {
                     pnlAPessoa.getControle().getConexaoJDBC().remover(p);
-                    JOptionPane.showMessageDialog(this, "Jogador removido!", "Jogador", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Pessoa removido!", "Jogador", JOptionPane.INFORMATION_MESSAGE);
                     populaTable(); //refresh na tabela
 
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao remover Jogador -:" + ex.getLocalizedMessage(), "Jogadores", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao remover Pessoa -:" + ex.getLocalizedMessage(), "Jogadores", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
 

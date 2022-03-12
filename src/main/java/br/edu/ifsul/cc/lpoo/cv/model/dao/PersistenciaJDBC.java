@@ -255,27 +255,31 @@ public class PersistenciaJDBC implements InterfacePersistencia {
     }
 
     @Override
-    public List<Cliente> getListCliente() throws Exception {
+    public List<Pessoa> getListPessoa() throws Exception {
      
-        List<Cliente> listCliente = null;
+        List<Pessoa> listPessoa = null;
         
-       PreparedStatement ps = this.con.prepareStatement("select cpf, nome,cep,senha from tb_funcionario order by cpf asc");
+       PreparedStatement ps = this.con.prepareStatement("select cpf, nome,cep,senha,rg,data_cadastro from tb_pessoa order by cpf asc");
        ResultSet rs = ps.executeQuery();
        
-       listCliente = new ArrayList();
+       listPessoa = new ArrayList();
        
        while(rs.next()){
             
-           Cliente c = new Cliente();
+           Pessoa c = new Pessoa();
            c.setCpf(rs.getString("cpf"));
            c.setNome(rs.getString("nome"));
            c.setCep(rs.getString("cep"));
            c.setSenha(rs.getString("senha"));
+           c.setRg(rs.getString("rg"));
            
-           listCliente.add(c);
+           Calendar dtCad = Calendar.getInstance();
+           dtCad.setTimeInMillis(rs.getDate("data_cadastro").getTime());
+           c.setData_cadastro(dtCad);
+           listPessoa.add(c);
        }
        
-       return listCliente;
+       return listPessoa;
     }
 
 }

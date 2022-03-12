@@ -5,17 +5,93 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.gui.pessoa;
 
+import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
+import br.edu.ifsul.cc.lpoo.cv2.Controle;
+import java.text.SimpleDateFormat;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Igor Rocha
  */
 public class JPanelPessoaFormulario extends javax.swing.JPanel {
 
+    private Controle controle;
+    private JPanelPessoa pnlPessoa;
+
+    private Pessoa pessoa;
+    private SimpleDateFormat format;
+
     /**
      * Creates new form JPanelPessoaFormulario
      */
     public JPanelPessoaFormulario() {
         initComponents();
+    }
+
+    public JPanelPessoaFormulario(JPanelPessoa pnlPessoa, Controle controle) {
+        this.pnlPessoa = pnlPessoa;
+        this.controle = controle;
+
+        initComponents();
+        format = new SimpleDateFormat("dd/MM/yyyy");
+    }
+
+    public void populaComboEndereco() {
+
+        jcbxEndereco.removeAllItems();
+
+        DefaultComboBoxModel model = (DefaultComboBoxModel) jcbxEndereco.getModel();
+
+        model.addElement("Selecione");
+        model.addElement("Fisica");
+        model.addElement("Juridica");
+    }
+
+    public Pessoa getPessoaByFormulario() {
+
+        if (txfCpf.getText().trim().length() == 11 && new String(jpsfSenha.getPassword()).trim().length() > 3
+                && jcbxEndereco.getSelectedIndex() > 0) {
+
+            Pessoa p = new Pessoa();
+            p.setCpf(txfCpf.getText().trim());
+            p.setSenha(new String(jpsfSenha.getPassword()).trim());
+            p.setComplemento((String) (jcbxEndereco.getSelectedItem()));
+            p.setCep(txfCep.getText().trim());
+            p.setEmail(txfEmail.getText().trim());
+            p.setNome(txfNome.getText().trim());
+
+            if (pessoa != null) {
+                p.setData_cadastro(pessoa.getData_cadastro());
+            }
+
+            return p;
+        }
+
+        return null;
+    }
+
+    public void setPessoaFormulario(Pessoa p) {
+        if (p == null) {
+            txfCpf.setText("");
+            jpsfSenha.setText("");
+            jcbxEndereco.setSelectedIndex(0);
+            txfCep.setText("");
+            txfEmail.setText("");
+            txfNome.setText("");
+            txfCpf.setEditable(true);
+            pessoa = null;
+        }else{
+            
+            txfCpf.setEditable(false);
+            txfCpf.setText(pessoa.getCpf());
+            jpsfSenha.setText(pessoa.getSenha());
+            txfCep.setText(pessoa.getCep());
+            txfEmail.setText(pessoa.getEmail());
+            txfNome.setText(pessoa.getNome());
+            
+        }
     }
 
     /**
@@ -40,6 +116,10 @@ public class JPanelPessoaFormulario extends javax.swing.JPanel {
         lblEmail = new javax.swing.JLabel();
         txfEmail = new javax.swing.JTextField();
         txfCep = new javax.swing.JTextField();
+        jcbxEndereco = new javax.swing.JComboBox<>();
+        lblEndereco = new javax.swing.JLabel();
+        txfNome = new javax.swing.JTextField();
+        lblNickname1 = new javax.swing.JLabel();
 
         btnGravar.setText("Gravar");
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -71,26 +151,29 @@ public class JPanelPessoaFormulario extends javax.swing.JPanel {
 
         jLabel2.setText("Senha:");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         pnlCentro.add(jLabel2, gridBagConstraints);
 
         jpsfSenha.setColumns(10);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlCentro.add(jpsfSenha, gridBagConstraints);
 
         lblCep.setText("CEP:");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         pnlCentro.add(lblCep, gridBagConstraints);
 
         lblEmail.setText("E-mail:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 0);
         pnlCentro.add(lblEmail, gridBagConstraints);
@@ -98,15 +181,48 @@ public class JPanelPessoaFormulario extends javax.swing.JPanel {
         txfEmail.setColumns(15);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         pnlCentro.add(txfEmail, gridBagConstraints);
 
         txfCep.setColumns(15);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlCentro.add(txfCep, gridBagConstraints);
+
+        jcbxEndereco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", " " }));
+        jcbxEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbxEnderecoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        pnlCentro.add(jcbxEndereco, gridBagConstraints);
+
+        lblEndereco.setText("Tipo:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        pnlCentro.add(lblEndereco, gridBagConstraints);
+
+        txfNome.setColumns(15);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        pnlCentro.add(txfNome, gridBagConstraints);
+
+        lblNickname1.setText("Nome");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        pnlCentro.add(lblNickname1, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -129,31 +245,54 @@ public class JPanelPessoaFormulario extends javax.swing.JPanel {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
 
-        //programação referente ao clique no botão Gravar.
+        Pessoa p = getPessoaByFormulario();
+        
+        if(p != null){
+            
+            try{
+                
+                pnlPessoa.getControle().getConexaoJDBC().persist(p);
+                JOptionPane.showMessageDialog(this, "Pessoa armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
+                pnlPessoa.showTela("tela_pessoa_listagem");
+                
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar Pessoa! : "+ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
 
-        // TODO add your handling code here:
+        }else{
+            JOptionPane.showMessageDialog(this, "Preencha o formulário!", "Edição", JOptionPane.INFORMATION_MESSAGE);
+        }
+           
+        
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 
-        //programação referente ao clique no botão Cancelar.
-
-        // TODO add your handling code here:
+        pnlPessoa.showTela("tela_pessoa_listagem");
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void jcbxEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxEnderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbxEnderecoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> jcbxEndereco;
     private javax.swing.JPasswordField jpsfSenha;
     private javax.swing.JLabel lblCep;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblNickname;
+    private javax.swing.JLabel lblNickname1;
     private javax.swing.JPanel pnlCentro;
     private javax.swing.JPanel pnlSul;
     private javax.swing.JTextField txfCep;
     private javax.swing.JTextField txfCpf;
     private javax.swing.JTextField txfEmail;
+    private javax.swing.JTextField txfNome;
     // End of variables declaration//GEN-END:variables
 }

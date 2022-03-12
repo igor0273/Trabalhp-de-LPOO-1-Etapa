@@ -5,6 +5,7 @@
  */
 package br.edu.ifsul.cc.lpoo.cv.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,29 +27,29 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tb_pet")
-public class Pet {
+public class Pet implements Serializable{
     
     @Id
      @SequenceGenerator(name = "seq_pet", sequenceName = "seq_pet_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_pet", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String nome;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_nascimento;
     
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String observacao;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "raca_id", nullable = false)
+    @JoinColumn(name = "raca_id")
     private Raca raca;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     
     public Pet(){

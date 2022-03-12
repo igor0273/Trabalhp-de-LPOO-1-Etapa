@@ -22,11 +22,11 @@ import javax.persistence.TemporalType;
 @DiscriminatorValue("M")
 public class Medico extends Pessoa{
         
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private String numero_crmv;
     
    
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_cadastro_Medico;
     

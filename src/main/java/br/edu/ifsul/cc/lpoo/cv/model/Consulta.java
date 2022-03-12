@@ -15,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -35,30 +37,32 @@ public class Consulta implements Serializable {
     @GeneratedValue(generator = "seq_consulta", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_consulta;
     
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String observacao;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_retorno;
     
-    @Column(nullable = false, precision = 2)
+    @Column(precision = 2)
     private Float valor;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_id", nullable = false)
+    @JoinColumn(name = "pet_id")
     private Pet pet;
     
     
-    @OneToMany(mappedBy = "consulta")///Agregação por composição
+   @ManyToMany
+    @JoinTable(name = "tb_consulta_receita", joinColumns = {@JoinColumn(name = "consulta_id")},///agregacao, vai gerar uma tabela associativa.
+            inverseJoinColumns = {@JoinColumn(name = "receita_id")})
     private List<Receita> receita;
     
     @ManyToOne///associação
-    @JoinColumn(name = "medico_id", nullable = false)
+    @JoinColumn(name = "medico_id")
     private Medico medico;
     
     public Consulta(){

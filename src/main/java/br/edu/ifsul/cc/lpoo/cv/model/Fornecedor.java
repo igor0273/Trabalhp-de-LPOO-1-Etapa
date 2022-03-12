@@ -26,34 +26,16 @@ import javax.persistence.Table;
 @DiscriminatorValue("O")
 public class Fornecedor extends Pessoa{
     
-    @Id
-     @SequenceGenerator(name = "seq_fornecedor", sequenceName = "seq_fornecedor_id", allocationSize = 1)
-    @GeneratedValue(generator = "seq_fornecedor", strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    
-    @Column(nullable = false, length = 20)
+     
+    @Column(length = 20)
     private String cnpj;
     
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String ie;
     
   
     public Fornecedor(){
         
-    }
-
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**

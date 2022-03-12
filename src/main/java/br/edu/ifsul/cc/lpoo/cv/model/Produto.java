@@ -31,13 +31,13 @@ public class Produto implements Serializable {
     @GeneratedValue(generator = "seq_produto", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String nome;
     
-    @Column(nullable = false ,precision = 2)
+    @Column(precision = 2)
     private Float valor;
     
-    @Column(nullable = false, precision = 2)
+    @Column(precision = 2)
     private Float quantidade;
     
     @Column
@@ -45,7 +45,7 @@ public class Produto implements Serializable {
     private TipoProduto tipoProduto;
     
     @ManyToOne
-    @JoinColumn(name = "fornecedor_id", nullable = false)
+    @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
     
     public Produto(){

@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,10 +30,10 @@ public class Raca implements Serializable {
     @GeneratedValue(generator = "seq_raca", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String nome;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "especie_id")
     private Especie especie;
 

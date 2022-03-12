@@ -27,14 +27,20 @@ public class JPanelPessoa extends JPanel{
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);
         
-        listagem = new JPanelPessoaListagem();
-        formulario = new JPanelPessoaFormulario();
+        listagem = new JPanelPessoaListagem(this, controle);
+        formulario = new JPanelPessoaFormulario(this, controle);
         
-        this.add(listagem, "listagem");
-        this.add(formulario, "formulario");
+        this.add(listagem, "tela_pessoa_listagem");
+        this.add(getFormulario(), "tela_pessoa_formulario");
     }
     
     public void showTela(String nomeTela){
+        
+        if(nomeTela.equals("tela_pessoa_listagem")){
+            listagem.populaTable();
+        }else if(nomeTela.equals("tela_pessoa_formulario")){
+            getFormulario().populaComboEndereco();
+        }
          cardLayout.show(this, nomeTela);
     }
 
@@ -44,6 +50,15 @@ public class JPanelPessoa extends JPanel{
     public Controle getControle() {
         return controle;
     }
+
+    /**
+     * @return the formulario
+     */
+    public JPanelPessoaFormulario getFormulario() {
+        return formulario;
+    }
+    
+    
     
     
 }

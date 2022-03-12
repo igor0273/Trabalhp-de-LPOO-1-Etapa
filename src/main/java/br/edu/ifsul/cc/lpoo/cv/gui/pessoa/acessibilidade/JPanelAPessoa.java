@@ -44,7 +44,6 @@ public class JPanelAPessoa extends JPanel {
         if (nomeTela.equals("tela_pessoa_listagem")) {
 
             listagem.populaTable();
-
         } 
         cardLayout.show(this, nomeTela);
 

@@ -19,42 +19,41 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "tb_pessoa")
 @Inheritance(strategy = InheritanceType.JOINED)//alterar a estrategia para JOINED
-@DiscriminatorColumn(name = "tipo")
 public class Pessoa implements Serializable  {
     
    @Id
     private String cpf;
     
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private String rg;
     
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String nome;
     
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private String senha;
     
-    @Column(nullable = false, length = 14)
+    @Column(length = 14)
     private String numero_celular;
     
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String email;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_cadastro;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_nascimento;
     
-    @Column(nullable = false, length = 8)
+    @Column(length = 8)
     private String cep;
     
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String endereco;
     
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String complemento;
     
     public Pessoa(){

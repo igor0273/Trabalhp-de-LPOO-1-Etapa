@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +21,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -45,15 +45,15 @@ public class Venda implements Serializable {
     @Column(precision = 2)
     private Float valor_total;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_venda;
     
-     @ManyToOne///associaçao
-    @JoinColumn(name = "funcionario_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
     
-     @ManyToMany
+    @ManyToMany
     @JoinTable(name = "tb_venda_produtos", joinColumns = {@JoinColumn(name = "venda_id")}, //agregacao, vai gerar uma tabela associativa.
             inverseJoinColumns = {@JoinColumn(name = "produto_id")})
     private List<Produto> produtos;

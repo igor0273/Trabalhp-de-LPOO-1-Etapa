@@ -35,27 +35,27 @@ public class Agenda implements Serializable {
     @GeneratedValue(generator = "seq_agenda", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_inicio;
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_fim;
     
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String observacao;
     
-    @Column(nullable = false)
+    @Column
     @Enumerated(EnumType.STRING)
     private TipoProduto tipoProduto;
     
-    @OneToOne
-    @JoinColumn(name = "medico_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "medico_id")
     private Medico medico;
     
     @ManyToOne
-    @JoinColumn(name = "funcionario_id", nullable = false)
+    @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
 
     /**

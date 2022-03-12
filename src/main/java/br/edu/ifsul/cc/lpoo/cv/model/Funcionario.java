@@ -27,37 +27,18 @@ import javax.persistence.Table;
 @DiscriminatorValue("F")
 public class Funcionario extends Pessoa {
 
-    @Id
-    @SequenceGenerator(name = "seq_funcionario", sequenceName = "seq_funcionario_id", allocationSize = 1)
-    @GeneratedValue(generator = "seq_funcionario", strategy = GenerationType.SEQUENCE)
-    private Integer id;
-
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String numero_ctps;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String numero_pis;
 
-    @Column(nullable = false)
+    @Column
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
     public Funcionario() {
 
-    }
-
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**

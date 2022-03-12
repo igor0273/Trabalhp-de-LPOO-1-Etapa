@@ -6,21 +6,15 @@
 package br.edu.ifsul.cc.lpoo.cv.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,14 +26,13 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "tb_cliente")
 @DiscriminatorValue("C")
-public class Cliente extends Pessoa{
+public class Cliente extends Pessoa implements Serializable{
     
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_ultima_visita;
     
-    @OneToMany(mappedBy = "cliente")
-    private List<Pet> pets;///LISTA COM AGREGAÇÃO POR COMPOSIÇÃO
+
     
     @ManyToOne
     @JoinColumn(name = "venda_id")
@@ -55,14 +48,6 @@ public class Cliente extends Pessoa{
 
     public void setData_ultima_visita(Calendar data_ultima_visita) {
         this.data_ultima_visita = data_ultima_visita;
-    }
-
-    public List<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
     }
 
     public Venda getVenda() {
