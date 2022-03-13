@@ -28,7 +28,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener{
     
     private JLabel lblNickname;
     private JLabel lblSenha;
-    private JTextField txfNickname;
+    private JTextField txfCPF;
     private JPasswordField psfSenha;
     private JButton btnLogar;
     private Border defaultBorder;  
@@ -53,15 +53,15 @@ public class JPanelAutenticacao extends JPanel implements ActionListener{
         posicionador.gridx = 0;
         this.add(lblNickname, posicionador);
         
-        txfNickname = new JTextField(10);
-        txfNickname.setFocusable(true);   
-        txfNickname.setToolTipText("txfNickname"); 
-        Util.considerarEnterComoTab(txfNickname);
+        txfCPF = new JTextField(10);
+        txfCPF.setFocusable(true);   
+        txfCPF.setToolTipText("txfCPF"); 
+        Util.considerarEnterComoTab(txfCPF);
         posicionador = new GridBagConstraints();
         posicionador.gridy = 0;
         posicionador.gridx = 1;
-        defaultBorder = txfNickname.getBorder();
-        this.add(txfNickname, posicionador);
+        defaultBorder = txfCPF.getBorder();
+        this.add(txfCPF, posicionador);
         
          lblSenha = new JLabel("Senha:");        
         lblSenha.setToolTipText("lblSenha"); //acessibilidade        
@@ -95,15 +95,15 @@ public class JPanelAutenticacao extends JPanel implements ActionListener{
     
      public void requestFocus(){
         
-        txfNickname.requestFocus();
+        txfCPF.requestFocus();
     }
     
     public void cleanForm(){
         
-        txfNickname.setText("");
+        txfCPF.setText("");
         psfSenha.setText("");        
         
-        txfNickname.setBorder(defaultBorder);        
+        txfCPF.setBorder(defaultBorder);        
         psfSenha.setBorder(defaultBorder);
     }
     
@@ -113,15 +113,15 @@ public class JPanelAutenticacao extends JPanel implements ActionListener{
          if(e.getActionCommand().equals(btnLogar.getActionCommand())){
             
                 //validacao do formulario.
-                if(txfNickname.getText().trim().length() > 4){
+                if(txfCPF.getText().trim().length() > 4){
                                         
-                    txfNickname.setBorder(new LineBorder(Color.green,1));
+                    txfCPF.setBorder(new LineBorder(Color.green,1));
                     
                     if(new String(psfSenha.getPassword()).trim().length() > 3 ){
                                                 
                         psfSenha.setBorder(new LineBorder(Color.green,1));
                         
-                        controle.autenticar(txfNickname.getText().trim(), new String(psfSenha.getPassword()).trim());
+                        controle.autenticar(txfCPF.getText().trim(), new String(psfSenha.getPassword()).trim());
                         
                     }else{
                         
@@ -134,8 +134,8 @@ public class JPanelAutenticacao extends JPanel implements ActionListener{
                 }else{
                 
                     JOptionPane.showMessageDialog(this, "Informe Nickname com 4 ou mais dígitos", "Autenticação", JOptionPane.ERROR_MESSAGE);                    
-                    txfNickname.setBorder(new LineBorder(Color.red,1));
-                    txfNickname.requestFocus();
+                    txfCPF.setBorder(new LineBorder(Color.red,1));
+                    txfCPF.requestFocus();
                 }
                                       
             

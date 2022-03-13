@@ -6,6 +6,7 @@
 package br.edu.ifsul.cc.lpoo.cv.test;
 
 import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
+import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJDBC;
 import java.text.SimpleDateFormat;
@@ -56,6 +57,37 @@ public class TestePersistenciaJDBC {
                 System.out.println("Nao Encontrou a pessoa");
                 
                 p = new Pessoa();
+                p.setCep("99050310");
+                p.setComplemento("proximo a parede");
+                p.setCpf("12345678912");
+                p.setEmail("teste@teste");
+                p.setEndereco("hfuheufeuf");
+                p.setNome("igor");
+                p.setNumero_celular("96487673");
+                p.setRg("1234568795");
+                p.setSenha("123456");
+                
+                persistenciaJDBC.persist(p);
+            }else{
+                System.out.println("Encontrou a pessoa:"+ p.getCpf());
+                p.setSenha("456789");
+                persistenciaJDBC.persist(p);
+                System.out.println("Alterou a senha da pessoa: "+p.getCpf());
+            }
+            persistenciaJDBC.fecharConexao();
+        }
+    }
+    
+    public void testPersistFuncionario () throws Exception{
+           PersistenciaJDBC persistenciaJDBC = new PersistenciaJDBC();
+        
+        if(persistenciaJDBC.conexaoAberta()){
+            Funcionario p = (Funcionario) persistenciaJDBC.find(Funcionario.class, new Integer(1));
+            
+            if(p == null){
+                System.out.println("Nao Encontrou a pessoa");
+                
+                p = new Funcionario();
                 p.setCep("99050310");
                 p.setComplemento("proximo a parede");
                 p.setCpf("12345678912");

@@ -98,6 +98,32 @@ public class PersistenciaJDBC implements InterfacePersistencia {
 
     @Override
     public void persist(Object o) throws Exception {
+       
+        if(o instanceof  Funcionario){
+            Funcionario func = (Funcionario) o ;
+              if(func.getCpf() == null){
+                  PreparedStatement ps = this.con.prepareStatement("insert into tb_funcionario (cpf,rg,nome,senha,numero_celular,email,data_cadastro,data_nascimento,cep,endereco,complemento) values (nextval('seq_pessoa_id'),?,?,?,?,?,?,?,?,?,?,?) returning id");
+
+                ps.setString(1, func.getCpf());
+                ps.setString(2, func.getRg());
+                ps.setString(3, func.getNome());
+                ps.setString(4, func.getSenha());
+                ps.setString(5, func.getNumero_celular());
+                ps.setString(6, func.getEmail());
+
+                Date dt1 = new Date();
+                ps.setDate(7, (java.sql.Date) dt1);
+
+                Date dt2 = new Date();
+                ps.setDate(8, (java.sql.Date) dt2);
+
+                ps.setString(9, func.getCep());
+                ps.setString(10, func.getEndereco());
+                ps.setString(11, func.getComplemento());
+                ps.execute();
+              }
+        }
+       
 
         if (o instanceof Cliente) {
             Pessoa p = (Pessoa) o;
